@@ -48,11 +48,12 @@ class SdxlTurbo:
     """Класс модели SDXL-Turbo. Для генерации используется функция generate"""
 
     def __init__(self) -> None:
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.pipe = AutoPipelineForText2Image.from_pretrained("stabilityai/sdxl-turbo", torch_dtype=torch.float16, variant="fp16")
-        self.pipe.to("cuda")
+        self.pipe.to(self.device)
 
     def generate(self, query: SdxlQuery) -> BytesIO:
-        generator = [torch.Generator(device="cuda").manual_seed(query.seed)]
+        generator = [torch.Generator(device=self.device).manual_seed(query.seed)]
         prompt = query.get_full_prompt()
         image = self.pipe(prompt=prompt, num_inference_steps=1, guidance_scale=0.0, generator=generator).images[0]
 
