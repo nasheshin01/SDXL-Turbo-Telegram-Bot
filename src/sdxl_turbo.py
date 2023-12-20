@@ -6,6 +6,7 @@ from random import randint
 
 
 class SdxlQuery:
+    """Класс запроса для модели SDXL"""
 
     def __init__(self, main_prompt: str) -> None:
         self.main_prompt = main_prompt
@@ -44,6 +45,7 @@ class SdxlQuery:
         
 
 class SdxlTurbo:
+    """Класс модели SDXL-Turbo. Для генерации используется функция generate"""
 
     def __init__(self) -> None:
         self.pipe = AutoPipelineForText2Image.from_pretrained("stabilityai/sdxl-turbo", torch_dtype=torch.float16, variant="fp16")
