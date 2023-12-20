@@ -39,9 +39,13 @@ class SdxlQuery:
         
         self.tags = self.tags[:-1]
         return True
+    
+    def clear_tags(self):
+        self.tags = []
         
     def new_seed(self):
         self.seed = randint(0, 100000)
+
         
 
 class SdxlTurbo:

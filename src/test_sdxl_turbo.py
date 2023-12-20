@@ -60,6 +60,12 @@ class TestSdxlQuery(unittest.TestCase):
         self.assertTrue(result)
         self.assertNotEqual(last_tag, query.tags[-1])
 
+    def test_clear_tag(self):
+        query = SdxlQuery("")
+        query.clear_tags()
+
+        self.assertEqual(len(query.tags), 0)
+
 class TestSdxlTurbo(unittest.TestCase):
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="Requires cuda to run")

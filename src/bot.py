@@ -52,7 +52,8 @@ def start_session(message):
                      "/set {main_prompt} - sets new main prompt for generating\n" +
                      "/add {tag} - adds new tag for generating\n" +
                      "/remove [optional]{tag} - removes written tag or the last (if command used without argument)\n" +
-                     "/new_seed - generates new random number, to randomize images")
+                     "/new_seed - generates new random number, to randomize images\n" +
+                     "/clear_tags - removes all tags")
 
 # Обработчик команды /set
 @bot.message_handler(commands=['set'])
@@ -110,6 +111,16 @@ def remove_tag(message):
         return
     
     bot.send_message(chat_id, "Tag removed. Generating new image...")
+    generate_and_send_image(chat_id)
+
+# Обработчик команды /clear_tags
+@bot.message_handler(commands=['clear_tags'])
+def clear_tags(message):
+    chat_id = message.chat.id
+    check_and_create_new_query_if_necessary(chat_id)
+    queries[chat_id].clear_tags()
+
+    bot.send_message(chat_id, "All tags removed. Generating new image...")
     generate_and_send_image(chat_id)
 
 
