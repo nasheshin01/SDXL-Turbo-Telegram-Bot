@@ -1,4 +1,6 @@
 import unittest
+import pytest
+import torch
 
 from sdxl_turbo import SdxlQuery, SdxlTurbo
 from io import BytesIO
@@ -60,6 +62,7 @@ class TestSdxlQuery(unittest.TestCase):
 
 class TestSdxlTurbo(unittest.TestCase):
     
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason="Requires cuda to run")
     def test_generate(self):
         query = SdxlQuery("")
         model = SdxlTurbo()
